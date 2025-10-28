@@ -1,6 +1,5 @@
 # performance_test.py
 import timeit
-from calculator import add
 
 def performance_add_repeated():
     """Prueba de rendimiento: suma repetida 10,000 veces."""
