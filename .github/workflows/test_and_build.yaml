@@ -18,17 +18,12 @@ jobs:
         with:
           python-version: "3.12"
           
-      # --- STEP 1: Install Dependencies (including pytest==8.3.4 and ruff==0.8.1) ---
       - name: Install dependencies
         run: pip install -r requirements.txt
         
-      # --- STEP 2: Run Linting with Ruff ---
-      # This step uses the ruff tool to check code quality.
       - name: Check Linting with Ruff
         run: ruff check . 
 
-      # --- STEP 3: Run Tests with Pytest ---
-      # This step executes the tests using the specified pytest version.
       - name: Test with Pytest
         run: pytest test_calculator.py
 
@@ -43,5 +38,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ghcr.io/Yesenia21m/Calculadora:latest
-     
+          tags: ghcr.io/${{ github.repository_owner }}/calculadora:latest
+        
