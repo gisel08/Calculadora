@@ -6,6 +6,8 @@ on:
 
 permissions:
   contents: read
+  # SOLUCIÓN CLAVE: Añadir permiso de escritura para 'packages'
+  packages: write 
 
 jobs:
   test_and_build:
@@ -13,11 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.12"
-          
+      # ... (Pasos de Configuración e Instalación)
+
+      # --- CI Steps (Test and Lint) ---
       - name: Install dependencies
         run: pip install -r requirements.txt
         
@@ -27,12 +27,13 @@ jobs:
       - name: Test with Pytest
         run: pytest test_calculator.py
 
+      # --- CD Steps (Build and Push Container) ---
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }} # Este token ahora tendrá permisos de 'write' en paquetes
 
       - name: Build and push
         uses: docker/build-push-action@v6
