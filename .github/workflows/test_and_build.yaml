@@ -1,32 +1,33 @@
-name: Prueba y compilación # ¡Usar 'name'!
+name: Test and Build
 
-# when
 on:
   push:
-    branches: [ "principal" ]
+    branches: [ "main" ]
 
 permissions:
   contents: read
 
 jobs:
-  prueba_y_construcción:
+  test_and_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
-      - name: Configurar Python 3.12 # ¡Usar 'name'!
+      - name: Set up Python 3.12
         uses: actions/setup-python@v3
         with:
-          python-version: "3.12" # ¡Usar 'python-version'!
+          python-version: "3.12"
           
-      # PASO 1
-      - name: Instalar dependencias
-        run: pip install -r requisitos.txt # ¡Usar 'run'!
+      # --- STEP 1: Install Dependencies (including pytest==8.3.4 and ruff==0.8.1) ---
+      - name: Install dependencies
+        run: pip install -r requirements.txt
         
-      # PASO 2
-      - name: Comprobar pelusa
-        run: flake8 . # ¡Usar 'run'!
+      # --- STEP 2: Run Linting with Ruff ---
+      # This step uses the ruff tool to check code quality.
+      - name: Check Linting with Ruff
+        run: ruff check . 
 
-      # PASO 3
-      - name: Prueba con pytest
-        run: pytest test_calculator.py # ¡Usar 'run'!
+      # --- STEP 3: Run Tests with Pytest ---
+      # This step executes the tests using the specified pytest version.
+      - name: Test with Pytest
+        run: pytest test_calculator.py
