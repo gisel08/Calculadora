@@ -1,5 +1,4 @@
 # main.py
-from calculator import add, subtract, multiply, divide
 
 def main():
     print("Calculadora Simple")
